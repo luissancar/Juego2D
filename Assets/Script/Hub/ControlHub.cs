@@ -7,6 +7,7 @@ public class ControlHub : MonoBehaviour
 {
     public TextMeshProUGUI vidasTxt;
     public TextMeshProUGUI puntosTxt;
+    public TextMeshProUGUI tiempoTxt;
 
     public void SetVidasTxt(int vidas)
     {
@@ -18,5 +19,25 @@ public class ControlHub : MonoBehaviour
         puntosTxt.text ="Puntos: " + puntos;
 
     }
+
+    public void SetTiempoTxt(int tiempo)
+    {
+        int minutos, segundos;
+        minutos = tiempo / 60;
+        segundos= tiempo % 60;
+        string formatoMinSeg =string.Format("{0:00}:{1:00}",minutos,segundos);
+        tiempoTxt.text = "Tiempo: " + formatoMinSeg;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }

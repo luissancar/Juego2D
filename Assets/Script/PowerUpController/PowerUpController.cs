@@ -21,8 +21,10 @@ public class PowerUpController : MonoBehaviour
         {
             entrado=true;
             sonido.Play();
+            collision.gameObject.GetComponent<PlayerController>().PowerUpsMenos();
             collision.gameObject.GetComponent<PlayerController>().IncrepentarPuntos(3);
             collision.gameObject.GetComponent<PlayerController>().disparos += disparosAdicionales;
+            GetComponent<TextoPosicion>().activo = true;
             Destroy(gameObject, 1);
         }
     }

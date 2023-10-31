@@ -29,6 +29,16 @@ public class PlayerController : MonoBehaviour
     private ControlHub hud;
 
 
+    public int tiempoNivel;
+    public float tiempoInicio;
+    public float tiempoEmpleado;
+
+    public int powersUps;
+
+    private ControlDatosJuego datosJuego;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +59,13 @@ public class PlayerController : MonoBehaviour
         hud = canvas.GetComponent<ControlHub>();
         hud.SetVidasTxt(vidas);
         hud.SetPuntosTxt(puntos);
+
+        tiempoNivel = 50;
+        tiempoInicio = Time.time;
+
+        powersUps = 1;
+
+        datosJuego=GameObject.Find("DatosJuego").GetComponent<ControlDatosJuego>();
     }
 
     // Update is called once per frame
@@ -58,6 +75,34 @@ public class PlayerController : MonoBehaviour
         Salto();
         Flip();
         AnimarJugador();
+        TiempoEmpleado();
+    }
+
+    public void PowerUpsMenos()
+    {
+        powersUps--;
+        if ( powersUps < 1 )
+        {
+            Ganado();
+        }
+    }
+    private void TiempoEmpleado()
+    {
+        tiempoEmpleado = Time.time - tiempoInicio;
+        hud.SetTiempoTxt((int)(tiempoNivel - tiempoEmpleado));
+        if (tiempoNivel - tiempoEmpleado < 0)
+        {
+            Perder();
+        }
+    }
+
+    public void Ganado()
+    {
+        puntos = (vidas * 100) + ((int)tiempoNivel - (int)tiempoEmpleado);
+        datosJuego.Ganado = true;
+        datosJuego.Puntuacion = puntos;
+        Debug.Log(puntos.ToString());
+        SceneManager.LoadScene("Ganado");
     }
 
     public void IncrepentarPuntos(int cantidad)
@@ -133,8 +178,9 @@ public class PlayerController : MonoBehaviour
         return toca.collider != null;
     }
 
-    public void FinJuego()
+    public void Perder()
     {
+        datosJuego.Ganado = false;
         SceneManager.LoadScene("Menu");
     }
 }

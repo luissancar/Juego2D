@@ -76,7 +76,7 @@ public class EnemigoController : MonoBehaviour
         collision.gameObject.GetComponent<PlayerController>().muerto = true;
         collision.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(6f);
-        collision.gameObject.GetComponent<PlayerController>().FinJuego();
+        collision.gameObject.GetComponent<PlayerController>().Perder();
     }
 
     private void MoverEnemigo()
